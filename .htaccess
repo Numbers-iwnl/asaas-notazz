@@ -1,0 +1,37 @@
+# ============================================================
+# Asaas → Notazz — .htaccess raiz
+# Força HTTPS, bloqueia pastas e arquivos sensíveis.
+# ============================================================
+
+RewriteEngine On
+
+# -- Força HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# -- Bloqueia pastas que não devem ser acessíveis pela web
+RewriteRule ^(app|cron|database|storage)(/|$) - [F,L]
+
+# -- Bloqueia config.php, .gitignore, .htaccess, dotfiles, .sql, .log, .md, .txt
+<FilesMatch "(^\.|^config\.php$|composer\.(json|lock)|\.env|\.sql$|\.log$|\.md$|\.txt$|\.example\.php$)">
+    Require all denied
+</FilesMatch>
+
+# -- Sem cache para webhook e admin
+<IfModule mod_headers.c>
+    <FilesMatch "(webhook-asaas\.php|^index\.php$)">
+        Header set Cache-Control "no-store, no-cache, must-revalidate"
+        Header set X-Content-Type-Options "nosniff"
+        Header set X-Frame-Options "DENY"
+        Header set Referrer-Policy "same-origin"
+    </FilesMatch>
+</IfModule>
+
+# -- Página inicial
+DirectoryIndex index.php
+
+# -- Esconde versão do servidor / PHP
+ServerSignature Off
+
+# -- Sem listagem de diretórios
+Options -Indexes

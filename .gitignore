@@ -1,0 +1,11 @@
+config.php
+storage/logs/*
+storage/pdf/*
+storage/xml/*
+!storage/logs/.gitkeep
+!storage/pdf/.gitkeep
+!storage/xml/.gitkeep
+.idea/
+.vscode/
+*.log
+.DS_Store
