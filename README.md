@@ -4,9 +4,16 @@
 
 > 🇧🇷 Emissão automática de NF-e e NFS-e a partir dos pagamentos do Asaas, via Notazz: webhook → fila → emissão com novas tentativas, multiempresa, painel do financeiro e acompanhamento de inadimplência. PHP puro, feito para hospedagem compartilhada.
 
+| | |
+|---|---|
+| **Status** | In production, maintained |
+| **Usage** | 10–100 invoices a month, depending on the month, across multiple companies |
+| **Why not the native integration** | Asaas' built-in Notazz integration couldn't keep a product catalog or split one sale into NF-e + NFS-e |
+| **Build time** | ~1 week to production (traditional estimate: 6–8 weeks), with occasional fixes since |
+
 ## Why
 
-Every paid sale needed invoices typed by hand, cross-referencing the customer and the product between the payment gateway and the invoicing platform. Mistakes and delays were common, and installment card payments made it worse (one invoice per installment, in the right month).
+Asaas has a native Notazz integration, but it couldn't do what the business needed: keep a product catalog, route products to different companies, or split one sale into an NF-e and an NFS-e. So every paid sale needed invoices typed by hand, cross-referencing the customer and the product between the two platforms. Mistakes and delays were common, and installment card payments made it worse (one invoice per installment, in the right month).
 
 ## How it works
 
@@ -54,6 +61,10 @@ Dashboard with monthly goal, sales, issued / pending / failed invoices with deta
 ## Stack
 
 PHP 8 (no framework) · MySQL · Asaas API · Notazz API · Eduzz API · cron · Chart.js
+
+## How it was built
+
+Built with AI coding agents (Claude Code and OpenAI Codex) writing the code. My part was understanding the finance team's process and the fiscal rules, specifying the behaviour, reviewing the generated code, testing against real payments and running it in production. Traditional estimates are my own ballpark for one developer writing it by hand.
 
 ---
 
